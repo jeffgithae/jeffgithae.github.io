@@ -509,6 +509,8 @@
               .then(
                 function (response) {
                 //   console.log("Email sent successfully:", response);
+				alert('Email sent. I will get back to you as soon as possible')
+				document.getElementById("myForm").reset()
                 },
                 function (error) {
                 //   console.error("Email sending failed:", error);
