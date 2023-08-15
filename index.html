@@ -405,19 +405,21 @@
                     jeffgithae03@gmail.com</a
                   >
                 </p>
+				<p>
+					<i class="fa fa-github"></i>
+					<a href="https://github.com/jeffgithae" target="_blank"
+					  >Github</a
+					>
+				  </p>
                 <p><i class="fa fa-map-marker"></i> Nairobi Kenya</p>
-                <p>
-                  <i class="fa fa-github"></i>
-                  <a href="https://github.com/jeffgithae" target="_blank"></a
-                  >https://github.com/jeffgithae
-                </p>
+                
               </address>
             </div>
             <div
               class="col-lg-6 col-md-6 col-xs-10 wow fadeInUp"
               data-wow-delay="0.6s"
             >
-              <form role="form" method="post"  id="myForm">
+              <form role="form" method="post" id="myForm">
                 <input
                   name="name"
                   type="text"
@@ -500,20 +502,23 @@
 
             // Send email
             emailjs
-              .send("service_ljkgfhe", "template_bdsqe9v", {
-                to_email: "jeffgithae03@gmail.com",
+              .send("service_ljkgfhe", "template_uqv99tg", {
+                to_email: "jeffkinyua64@gmail.com",
+                to_name: "Jeff",
                 from_name: name,
-                from_email: email,
-                message_html: message,
+                email: email,
+                message: message,
               })
               .then(
                 function (response) {
-                //   console.log("Email sent successfully:", response);
-				alert('Email sent. I will get back to you as soon as possible')
-				document.getElementById("myForm").reset()
+                  //   console.log("Email sent successfully:", response);
+                  alert(
+                    "Thank you for reaching out. I will get back to you as soon as possible."
+                  );
+                  document.getElementById("myForm").reset();
                 },
                 function (error) {
-                //   console.error("Email sending failed:", error);
+                  //   console.error("Email sending failed:", error);
                 }
               );
           });
