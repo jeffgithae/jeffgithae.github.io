@@ -15,6 +15,7 @@
     // slimscroll
     var SCROLLABLE =            'fp-scrollable';
     var SCROLLABLE_SEL =        '.' + SCROLLABLE;
+    
     var SLIMSCROLL_BAR_SEL =    '.slimScrollBar';
     var SLIMSCROLL_RAIL_SEL =   '.slimScrollRail';
 
