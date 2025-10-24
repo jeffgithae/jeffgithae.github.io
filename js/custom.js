@@ -1,19 +1,19 @@
-
-//
+// Fullpage initialization
 $(document).ready(function() {
-			$('#fullpage').fullpage({
-				'verticalCentered': false,
-				'scrollingSpeed': 600,
-				'autoScrolling': false,
-				'css3': true,
-				'navigation': true,
-				'navigationPosition': 'right',
-			});
-		});
+    $('#fullpage').fullpage({
+        'verticalCentered': false,
+        'scrollingSpeed': 600,
+        'autoScrolling': false,
+        'css3': true,
+        'navigation': true,
+        'navigationPosition': 'right',
+    });
+});
 
-// wow
-$(function()
-{
+// WOW.js initialization
+$(function() {
     new WOW().init();
     $(".rotate").textrotator();
-})
+});
+
+

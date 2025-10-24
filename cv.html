@@ -1,402 +1,479 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jeff Kinyua Githae - Résumé</title>
+  <title>Jeff Kinyua Githae - Senior Software Engineer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
-    @page {
-      margin: 0.75in;
-      size: A4;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-      font-size: 11pt;
-      line-height: 1.4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
       color: #333;
-      margin: 0;
-      padding: 0;
-      background: #f7f7f7;
+      background: #f4f4f4;
+      padding: 20px;
     }
 
     .container {
-      margin: 30px auto;
+      max-width: 800px;
+      margin: 0 auto;
       background: white;
-      width: 210mm;
-      min-height: 297mm;
-      padding: 20mm;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
     }
 
     .header {
       text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
       border-bottom: 3px solid #2c5aa0;
-      padding-bottom: 15px;
-      margin-bottom: 20px;
     }
 
     .name {
-      font-size: 28pt;
+      font-size: 32px;
       font-weight: bold;
       color: #2c5aa0;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
 
     .title {
-      font-size: 13pt;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: #444;
-      margin-bottom: 10px;
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 12px;
     }
 
     .contact-info {
-      font-size: 10pt;
-      color: #555;
-      line-height: 1.4;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.8;
     }
 
     .contact-info a {
-      text-decoration: none;
       color: #2c5aa0;
+      text-decoration: none;
     }
 
     .section {
       margin-bottom: 25px;
-      page-break-inside: avoid;
     }
 
     .section-title {
-      font-size: 16pt;
+      font-size: 20px;
       font-weight: bold;
       color: #2c5aa0;
-      border-bottom: 2px solid #2c5aa0;
-      padding-bottom: 3px;
       margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #e0e0e0;
     }
 
     .summary-text {
       text-align: justify;
-      margin-bottom: 15px;
+      line-height: 1.7;
+      font-size: 14px;
     }
 
     .highlight {
-      font-weight: bold;
       color: #2c5aa0;
+      font-weight: 600;
     }
 
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 15px;
+    }
+
+    .skill-category {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
     }
 
     .skill-category-title {
-      font-weight: bold;
+      font-weight: 600;
       color: #2c5aa0;
-      font-size: 11pt;
-      margin-bottom: 5px;
+      font-size: 13px;
+      white-space: nowrap;
+      min-width: 140px;
+    }
+
+    .skill-category-title:after {
+      content: ':';
     }
 
     .skill-list {
-      font-size: 10pt;
+      font-size: 12px;
       color: #555;
+      line-height: 1.5;
+    }
+
+    .page-break {
+      page-break-after: always;
+      break-after: page;
     }
 
     .job-title {
-      font-size: 13pt;
+      font-size: 15px;
       font-weight: bold;
       color: #333;
-      margin-bottom: 3px;
+      margin-top: 15px;
     }
 
     .company-info {
-      font-size: 11pt;
+      font-size: 13px;
       color: #666;
       font-style: italic;
       margin-bottom: 10px;
     }
 
     .subsection-title {
-      font-size: 12pt;
-      font-weight: bold;
+      font-weight: 600;
       color: #2c5aa0;
-      margin-top: 15px;
+      margin-top: 12px;
       margin-bottom: 8px;
-    }
-
-    .achievement::before {
-      content: "▪ ";
-      color: #2c5aa0;
-      font-weight: bold;
-      margin-right: 5px;
+      font-size: 14px;
     }
 
     .achievement {
-      margin-left: 15px;
-      margin-bottom: 8px;
+      margin-left: 20px;
+      margin-bottom: 6px;
+      position: relative;
+      padding-left: 15px;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
-    .project {
-      margin-bottom: 20px;
-    }
-
-    .project-title {
-      font-size: 12pt;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 5px;
-    }
-
-    .project-role {
-      font-style: italic;
+    .achievement:before {
+      content: "▹";
+      position: absolute;
+      left: 0;
       color: #2c5aa0;
     }
 
-    .project-impact strong {
+    .education-item,
+    .certification {
+      margin-bottom: 12px;
+    }
+
+    .degree,
+    .cert-name {
+      font-weight: 600;
       color: #333;
+      font-size: 14px;
     }
 
-    .project-url {
-      font-size: 9pt;
-      color: #2c5aa0;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .education-item, .certification {
-      margin-bottom: 10px;
-    }
-
-    .degree, .cert-name {
-      font-weight: bold;
-      color: #333;
-    }
-
-    .institution, .cert-issuer {
+    .institution,
+    .cert-issuer {
       color: #666;
-      font-style: italic;
-      font-size: 10pt;
+      font-size: 13px;
     }
 
     .cert-badge {
-      color: #2c5aa0;
-      font-weight: bold;
-      margin-right: 8px;
+      font-size: 16px;
     }
 
-    .languages, .additional-skills {
-      margin-bottom: 10px;
+    .project {
+      margin-bottom: 15px;
+      padding: 12px;
+      background: #f9f9f9;
+      border-radius: 5px;
+      border-left: 3px solid #2c5aa0;
+    }
+
+    .project-title {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .project-role {
+      color: #2c5aa0;
+      font-size: 13px;
+    }
+
+    .project-impact {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .project-url {
+      font-size: 12px;
+      color: #2c5aa0;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .download-btn-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .download-btn {
+      background: #2c5aa0;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+
+    .download-btn:hover {
+      background: #1e4070;
+    }
+
+    .download-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
     }
 
     @media print {
-      body { font-size: 10pt; }
-      .section { margin-bottom: 20px; }
-      .name { font-size: 24pt; }
-      .section-title { font-size: 14pt; }
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .container {
+        box-shadow: none;
+        border-radius: 0;
+        margin: 0;
+        max-width: 100%;
+      }
+
+      .download-btn-container {
+        display: none;
+      }
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
+
 <body>
-  <!-- <button onclick="downloadResumePDF()" style="margin:20px 0;float:right;">Download as PDF</button> -->
-<div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="name">Jeff Kinyua Githae</div>
-            <div class="title">Senior Software Engineer | Full-Stack Developer | Cybersecurity Enthusiast</div>
-            <div class="contact-info">
-                📧 <a href="mailto:jeffgithae03@gmail.com">jeffgithae03@gmail.com</a> | 📱 <a href="tel:+254715151494">+254 715151494</a> | 🌐 <a href="https://www.linkedin.com/in/jeff-githae/" >LinkedIn Profile</a> | 💻 <a href="https://github.com/jeffgithae" >GitHub Profile</a><br>
-                📍 Nairobi, Kenya
-            </div>
-        </div>
+  <!-- <div class="download-btn-container">
+        <button id="downloadPdf" class="download-btn">Download PDF</button>
+    </div> -->
 
-        <!-- Professional Summary -->
-        <div class="section">
-            <div class="section-title">Professional Summary</div>
-            <div class="summary-text">
-                Accomplished <span class="highlight">Senior Software Engineer</span> with 4+ years of experience architecting and delivering enterprise-grade web applications serving <span class="highlight">2,000+ daily users</span>. Proven expertise in full-stack development using modern technologies including Angular, NestJS, PHP, and cloud platforms. Demonstrated track record of leading <span class="highlight">8+ successful projects</span> from conception to deployment, with a specialized focus on scalable backend systems and cybersecurity best practices. Passionate about leveraging cutting-edge technology to solve complex business challenges while maintaining the highest security standards.
-            </div>
-        </div>
-
-        <!-- Core Competencies -->
-        <div class="section">
-            <div class="section-title">Core Competencies</div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-category-title">Frontend Technologies</div>
-                    <div class="skill-list">Angular 12+, TypeScript, JavaScript (ES6+), HTML5, CSS3, SASS, jQuery, Responsive Design, Progressive Web Apps (PWA)</div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-category-title">Backend & API Development</div>
-                    <div class="skill-list">NestJS, Node.js, PHP 8+, RESTful APIs, GraphQL, Microservices Architecture, Database Design & Optimization</div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-category-title">Content Management Systems</div>
-                    <div class="skill-list">Drupal 9/10 (Custom Module Development), WordPress (Theme & Plugin Development), Headless CMS Implementation</div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-category-title">Cloud & DevOps</div>
-                    <div class="skill-list">Microsoft Azure, Azure DevOps, CI/CD Pipelines, Docker, Git, Database Management (MySQL, MongoDB, PostgreSQL)</div>
-                </div>
-            </div>
-            <div class="skill-category">
-                <div class="skill-category-title">Cybersecurity</div>
-                <div class="skill-list">Security Auditing, Vulnerability Assessment, Secure Coding Practices, Data Protection, OWASP Guidelines</div>
-            </div>
-        </div>
-
-        <!-- Professional Experience -->
-        <div class="section">
-            <div class="section-title">Professional Experience</div>
-            
-            <div class="job-title">Senior Software Engineer | Sibasi Ltd</div>
-            <div class="company-info">November 2020 - Present | Nairobi, Kenya<br>
-            Leading technology solutions for enterprise clients across East Africa</div>
-            
-            <div class="subsection-title">Key Achievements:</div>
-            <div class="achievement"><span class="highlight">Scaled user base by 300%</span>: Led development of Infonet platform serving 2,000+ farmers daily with critical agricultural information</div>
-            <div class="achievement"><span class="highlight">Improved system performance by 40%</span>: Optimized database queries and API endpoints across multiple client projects</div>
-            <div class="achievement"><span class="highlight">Reduced development time by 25%</span>: Implemented reusable component libraries and established coding standards</div>
-            <div class="achievement"><span class="highlight">Enhanced security posture</span>: Conducted security audits and implemented OWASP-compliant security measures across all projects</div>
-            
-            <div class="subsection-title">Technical Leadership & Development:</div>
-            
-            <div style="margin-top: 10px;">
-                <strong>Frontend Excellence:</strong>
-                <div class="achievement">Architect responsive, cross-browser compatible interfaces using <span class="highlight">Angular 12+</span> and TypeScript</div>
-                <div class="achievement">Collaborate with UI/UX teams to translate complex business requirements into intuitive user experiences</div>
-                <div class="achievement">Develop custom Drupal themes and WordPress solutions aligned with enterprise brand guidelines</div>
-                <div class="achievement">Implement progressive web app features improving user engagement by 35%</div>
-            </div>
-            
-            <div style="margin-top: 10px;">
-                <strong>Backend Architecture:</strong>
-                <div class="achievement">Design and implement <span class="highlight">RESTful APIs</span> supporting high-traffic applications with 99.9% uptime</div>
-                <div class="achievement">Architect scalable <span class="highlight">NestJS</span> applications with microservices patterns for enterprise clients</div>
-                <div class="achievement">Optimize database schemas and implement efficient caching strategies reducing query response time by 50%</div>
-                <div class="achievement">Lead API integration initiatives with third-party services and payment gateways</div>
-            </div>
-            
-            <div style="margin-top: 10px;">
-                <strong>DevOps & Quality Assurance:</strong>
-                <div class="achievement">Establish CI/CD pipelines using <span class="highlight">Azure DevOps</span> reducing deployment time from hours to minutes</div>
-                <div class="achievement">Implement automated testing frameworks achieving 85% code coverage</div>
-                <div class="achievement">Mentor junior developers on best practices and conduct comprehensive code reviews</div>
-            </div>
-        </div>
-
-        <!-- Education -->
-        <div class="section">
-            <div class="section-title">Education</div>
-            <div class="education-item">
-                <div class="degree">Bachelor of Science in Computer Science</div>
-                <div class="institution">University of Nairobi | September 2016 - December 2020</div>
-                <div style="font-size: 10pt; color: #666; margin-top: 3px;"><em>Relevant Coursework: Data Structures, Algorithms, Database Systems, Software Engineering, Cybersecurity</em></div>
-            </div>
-            <div class="education-item">
-                <div class="degree">Diploma in Computer Science</div>
-                <div class="institution">University of Nairobi | September 2016 - December 2018</div>
-            </div>
-        </div>
-
-        <!-- Professional Certifications -->
-        <div class="section">
-            <div class="section-title">Professional Certifications</div>
-            <div class="certification">
-                <span class="cert-badge">🏆</span>
-                <span class="cert-name">Microsoft Azure Developer Associate</span> | <span class="cert-issuer">Microsoft | February 2022</span>
-            </div>
-            <div class="certification">
-                <span class="cert-badge">🏆</span>
-                <span class="cert-name">Azure DevOps Expert</span> | <span class="cert-issuer">Microsoft | February 2022</span>
-            </div>
-            <div class="certification">
-                <span class="cert-badge">🏆</span>
-                <span class="cert-name">Lead Auditor Certification</span> | <span class="cert-issuer">Mastermind Assurance | April 2025</span>
-            </div>
-        </div>
-
-        <!-- Featured Projects -->
-        <div class="section">
-            <div class="section-title">Featured Projects</div>
-            
-            <div class="project">
-                <div class="project-title">Infonet Agricultural Platform | <span class="project-role">Lead Developer</span></div>
-                <div class="project-impact"><strong>Impact</strong>: Serving 2,000+ farmers daily across Kenya</div>
-                <a href="https://infonet-biovision.org/" class="project-url">🔗 infonet-biovision.org</a>
-                <div class="achievement">Implemented comprehensive Drupal-based solution providing real-time farming insights</div>
-                <div class="achievement">Integrated weather APIs and crop management systems improving farming yields by 20%</div>
-                <div style="font-size: 10pt; color: #666; margin-top: 5px;"><strong>Technologies</strong>: Drupal 9, PHP, MySQL, RESTful APIs</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">Monival - Enterprise Monitoring & Evaluation System | <span class="project-role">Lead Backend Developer</span></div>
-                <div class="project-impact"><strong>Impact</strong>: Streamlined M&E processes for 50+ organizations</div>
-                <a href="https://monival.com/" class="project-url">🔗 monival.com</a>
-                <div class="achievement">Architected scalable backend infrastructure supporting complex data analytics</div>
-                <div class="achievement">Implemented real-time reporting dashboards reducing report generation time by 60%</div>
-                <div style="font-size: 10pt; color: #666; margin-top: 5px;"><strong>Technologies</strong>: NestJS, MongoDB, Angular, Chart.js</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">EBM Suite - Small Business ERP Solution | <span class="project-role">Full-Stack Developer</span></div>
-                <div class="project-impact"><strong>Impact</strong>: Empowering 100+ small businesses with enterprise-grade tools</div>
-                <a href="https://ebmsuite.com/" class="project-url">🔗 ebmsuite.com</a>
-                <div class="achievement">Developed comprehensive ERP system with inventory, accounting, and CRM modules</div>
-                <div class="achievement">Designed intuitive user interface increasing user adoption rate by 45%</div>
-                <div style="font-size: 10pt; color: #666; margin-top: 5px;"><strong>Technologies</strong>: NestJS, Angular, PostgreSQL, TypeScript</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">21C Skills - EdTech Learning Platform | <span class="project-role">Frontend Developer</span></div>
-                <div class="project-impact"><strong>Impact</strong>: Upskilling 500+ African tech professionals</div>
-                <a href="https://21cskills.africa/site/home" class="project-url">🔗 21cskills.africa</a>
-                <div class="achievement">Developed interactive learning modules with progress tracking and certification systems</div>
-                <div class="achievement">Integrated video streaming and assessment tools enhancing learning experience</div>
-                <div style="font-size: 10pt; color: #666; margin-top: 5px;"><strong>Technologies</strong>: Angular, NestJS, Video.js, MongoDB</div>
-            </div>
-        </div>
-
-        <!-- Technical Achievements -->
-        <div class="section">
-            <div class="section-title">Technical Achievements</div>
-            <div class="achievement"><span class="highlight">Performance Optimization</span>: Reduced average page load times by 40% across client projects</div>
-            <div class="achievement"><span class="highlight">Security Enhancement</span>: Implemented comprehensive security audits preventing potential vulnerabilities</div>
-            <div class="achievement"><span class="highlight">Code Quality</span>: Maintained 95%+ code coverage through automated testing frameworks</div>
-            <div class="achievement"><span class="highlight">Team Leadership</span>: Mentored 5+ junior developers and established coding standards adopted company-wide</div>
-        </div>
-
-        <!-- Languages & Additional Skills -->
-        <div class="section">
-            <div class="section-title">Languages & Additional Skills</div>
-            <div style="margin-bottom: 8px;"><strong>Languages</strong>: English (Fluent), Swahili (Native)</div>
-            <div><strong>Additional</strong>: Agile/Scrum Methodologies, Technical Documentation, Client Relationship Management, Project Leadership</div>
-        </div>
-
-        <!-- Professional References -->
-        <div class="section">
-            <div class="section-title">Professional References</div>
-            <div><strong>Available upon request</strong> - Including technical leads, project managers, and client testimonials demonstrating impact and leadership capabilities.</div>
-        </div>
+  <div class="container" id="resume-content">
+    <!-- Header -->
+    <div class="header">
+      <div class="name">Jeff Kinyua Githae</div>
+      <div class="title">Senior Software Engineer | Product Lead | Full-Stack Developer</div>
+      <div class="contact-info">
+        📧 <a href="mailto:jeffgithae03@gmail.com">jeffgithae03@gmail.com</a> |
+        📱 <a href="tel:+254715151494">+254 715151494</a> |
+        🌐 <a href="https://linkedin.com/in/jeff-githae" target="_blank">LinkedIn</a> |
+        💻 <a href="https://github.com/jeffgithae" target="_blank">GitHub</a><br>
+        📍 Nairobi, Kenya
+      </div>
     </div>
-  <script>
-    function downloadResumePDF() {
-      const element = document.querySelector('.container');
-      const opt = {
-        margin: 0,
-        filename: 'Jeff_Kinyua_Githae_Resume.pdf',
-        image: { type: 'jpeg', quality: 1 },
-        html2canvas: { scale: 3 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
-      html2pdf().set(opt).from(element).save();
-    }
-  </script>
+
+    <!-- Professional Summary -->
+    <div class="section">
+      <div class="section-title">Professional Summary</div>
+      <div class="summary-text">
+        Accomplished <span class="highlight">Senior Software Engineer</span> and <span class="highlight">Product
+          Lead</span> with 5+ years of experience in software development, solution architecture, and team leadership.
+        Proven track record of designing and delivering scalable web applications and enterprise systems. Currently
+        leading the <span class="highlight">EBM Suite</span> team of 6 developers at <span class="highlight">Sibasi
+          Ltd</span> while also serving as a <span class="highlight">Web Developer</span> for <span
+          class="highlight">The Foreign Venture Group</span>. Expertise in <span class="highlight">full-stack
+          development</span> with strong leadership, mentoring, and client-facing skills.
+      </div>
+    </div>
+
+    <!-- Core Competencies -->
+    <div class="section">
+      <div class="section-title">Core Competencies</div>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <div class="skill-category-title">Frontend Technologies</div>
+          <div class="skill-list">Angular, TypeScript, JavaScript (ES6+), HTML5, CSS3, SASS, jQuery, Responsive
+            Design, Progressive Web Apps (PWA)</div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">Backend Development</div>
+          <div class="skill-list">NestJS, Node.js, PHP, RESTful APIs, Microservices, Database Optimization</div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">Cloud & DevOps</div>
+          <div class="skill-list">Microsoft Azure, Azure DevOps, Docker, CI/CD Pipelines, Git, MySQL, MongoDB,
+            PostgreSQL</div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">Cybersecurity</div>
+          <div class="skill-list">Security Auditing, Vulnerability Assessment, OWASP Best Practices, Secure Coding</div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">Leadership</div>
+          <div class="skill-list">Team Mentoring, Code Reviews, Solution Architecture, Client Interactions, Agile
+            Methodologies</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Professional Experience -->
+    <div class="section">
+      <div class="section-title">Professional Experience</div>
+
+      <div class="job-title">Senior Software Engineer & Product Lead | Sibasi Ltd</div>
+      <div class="company-info">November 2020 - Present | Nairobi, Kenya</div>
+
+      <div class="subsection-title">Leadership & Management:</div>
+      <div class="achievement">Lead the <span class="highlight">EBM Suite</span> team of 6 engineers, focusing on team
+        growth, mentoring, and cross-team collaboration.</div>
+      <div class="achievement">Architect scalable solutions and oversee code reviews, ensuring high-quality standards.
+      </div>
+      <div class="achievement">Collaborate directly with clients, gathering requirements, providing technical guidance,
+        and delivering tailored solutions.</div>
+      <div class="achievement">Foster a culture of continuous learning by mentoring junior developers and organizing
+        internal training sessions.</div>
+
+      <div class="subsection-title">Key Achievements:</div>
+      <div class="achievement"><span class="highlight">Scaled user base by 300%</span> for a critical agricultural
+        platform.</div>
+      <div class="achievement"><span class="highlight">Improved system performance by 40%</span> through database
+        optimization and API enhancements.</div>
+      <div class="achievement"><span class="highlight">Mentored 5+ developers</span>, improving team efficiency and
+        ensuring high code quality across all projects.</div>
+
+      <div class="job-title">Web Developer | The Foreign Venture Group (FVG)</div>
+      <div class="company-info">September 2025 - Present | Remote (Canada)</div>
+
+      <div class="subsection-title">Key Responsibilities:</div>
+      <div class="achievement">Design, develop, and maintain web applications for various Canadian-based clients.</div>
+      <div class="achievement">Collaborate closely with clients to understand requirements and deliver tailored
+        solutions.</div>
+      <div class="achievement">Ensure optimal performance, security, and scalability for all deployed applications.
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="section">
+      <div class="section-title">Education</div>
+      <div class="education-item">
+        <div class="degree">Bachelor of Science in Computer Science</div>
+        <div class="institution">University of Nairobi | September 2016 - December 2020</div>
+      </div>
+      <div class="education-item">
+        <div class="degree">Diploma in Computer Science</div>
+        <div class="institution">University of Nairobi | September 2016 - December 2018</div>
+      </div>
+    </div>
+
+    <!-- Professional Certifications -->
+    <div class="section">
+      <div class="section-title">Professional Certifications</div>
+      <div class="certification">
+        <span class="cert-badge">🏆</span>
+        <span class="cert-name">Microsoft Azure Developer Associate</span> |
+        <span class="cert-issuer">Microsoft | February 2022</span>
+      </div>
+      <div class="certification">
+        <span class="cert-badge">🏆</span>
+        <span class="cert-name">Azure DevOps Expert</span> |
+        <span class="cert-issuer">Microsoft | February 2022</span>
+      </div>
+      <div class="certification">
+        <span class="cert-badge">🏆</span>
+        <span class="cert-name">Lead Auditor Certification</span> |
+        <span class="cert-issuer">Mastermind Assurance | April 2025</span>
+      </div>
+    </div>
+
+    <!-- Featured Projects -->
+    <div class="section">
+      <div class="section-title">Featured Projects</div>
+
+      <div class="project">
+        <div class="project-title">Infonet Agricultural Platform | <span class="project-role">Lead Developer</span>
+        </div>
+        <div class="project-impact"><strong>Impact</strong>: Serving 2,000+ farmers daily across Kenya</div>
+        <div class="project-url">🔗 <a href="https://infonet-biovision.org/" target="_blank">infonet-biovision.org</a>
+        </div>
+        <div class="achievement">Implemented comprehensive Drupal-based solution providing real-time farming insights
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-title">Monival - Enterprise Monitoring & Evaluation System | <span class="project-role">Lead
+            Backend Developer</span></div>
+        <div class="project-impact"><strong>Impact</strong>: Streamlined M&E processes for 50+ organizations</div>
+        <div class="project-url">🔗 <a href="https://monival.com/" target="_blank">monival.com</a></div>
+        <div class="achievement">Architected scalable backend infrastructure supporting complex data analytics</div>
+      </div>
+
+      <div class="project">
+        <div class="project-title">EBM Suite - Small Business ERP Solution | <span class="project-role">Full-Stack
+            Developer</span></div>
+        <div class="project-impact"><strong>Impact</strong>: Empowering 100+ small businesses with enterprise-grade
+          tools</div>
+        <div class="project-url">🔗 <a href="https://ebmsuite.com/" target="_blank">ebmsuite.com</a></div>
+        <div class="achievement">Developed comprehensive ERP system with inventory, accounting, and CRM modules</div>
+      </div>
+
+      <div class="project">
+        <div class="project-title">21C Skills - EdTech Learning Platform | <span class="project-role">Frontend
+            Developer</span></div>
+        <div class="project-impact"><strong>Impact</strong>: Upskilling 500+ African tech professionals</div>
+        <div class="project-url">🔗 <a href="https://21cskills.africa/" target="_blank">21cskills.africa</a></div>
+        <div class="achievement">Developed interactive learning modules with progress tracking and certification systems
+        </div>
+      </div>
+
+
+      <div class="project">
+        <div class="project-title">eBoard - Digital Board Management Platform | <span class="project-role">Backend
+            Developer</span></div>
+        <div class="project-impact"><strong>Built by:</strong> <span class="highlight">Sibasi Ltd</span></div>
+        <div class="project-impact"><strong>Impact</strong>: Used by 10+ organizations to digitize governance and board
+          operations</div>
+
+        <div class="project-url">🔗 <a href="https://eboard.sibasi.com/" target="_blank">eboard.sibasi.com</a></div>
+        <div class="achievement">Developed backend modules supporting Board management, user roles, and reporting
+          features</div>
+      </div>
+    </div>
+
+    <!-- Technical Achievements -->
+    <div class="section">
+      <div class="section-title">Technical Achievements</div>
+      <div class="achievement"><span class="highlight">Performance Optimization</span>: Reduced average page load times
+        by 40% across client projects</div>
+      <div class="achievement"><span class="highlight">Security Enhancement</span>: Implemented comprehensive security
+        audits preventing potential vulnerabilities</div>
+      <div class="achievement"><span class="highlight">Team Leadership</span>: Mentored 5+ junior developers and
+        established coding standards adopted company-wide</div>
+    </div>
+
+    <!-- Languages & Additional Skills -->
+    <div class="section">
+      <div class="section-title">Languages & Additional Skills</div>
+      <div><strong>Languages</strong>: English (Fluent), Swahili (Native)</div>
+      <div><strong>Additional</strong>: Agile/Scrum Methodologies, Technical Documentation, Client Relationship
+        Management, Project Leadership</div>
+    </div>
+
+    <!-- Professional References -->
+    <div class="section">
+      <div class="section-title">Professional References</div>
+      <div><strong>Available upon request</strong> - Including technical leads, project managers, and client
+        testimonials demonstrating impact and leadership capabilities.</div>
+    </div>
+  </div>
+
 </body>
+
 </html>

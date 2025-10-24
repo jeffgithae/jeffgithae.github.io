@@ -143,6 +143,28 @@
     });
   });
 
+  // PDF Download Functionality
+$(document).ready(function() {
+    // Ensure jsPDF library is included (add this script tag in your HTML)
+    // <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+    $('#download-cv').on('click', function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Convert the HTML body or specific content into PDF
+        doc.html(document.body, {
+            callback: function (doc) {
+                // Trigger the download with a custom file name
+                doc.save('CV_Jeff_Githae.pdf');
+            },
+            margin: 10,
+            x: 10,
+            y: 10,
+        });
+    });
+});
+
   // Back to top button
   $('.back-to-top').on('click', function(e) {
     e.preventDefault();
